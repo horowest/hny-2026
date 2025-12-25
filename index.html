@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026</title>
+    <title>2026 Celebration</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,7 +25,6 @@
         }
         .font-serif { font-family: 'Playfair Display', serif; }
         
-        /* Floating Balloon Animation */
         @keyframes float {
             0% { transform: translateY(110vh) rotate(0deg); opacity: 1; }
             100% { transform: translateY(-20vh) rotate(20deg); opacity: 0; }
@@ -39,7 +38,6 @@
         }
         .balloon:active { transform: scale(0.8); }
 
-        /* Golden Shimmer Text */
         .shimmer {
             background: linear-gradient(90deg, #d4af37 0%, #fef3c7 50%, #d4af37 100%);
             background-size: 200% auto;
@@ -59,24 +57,72 @@
 
         .hidden { display: none !important; }
 
-        /* Countdown Card Styling */
         .unit-card {
             background: rgba(248, 250, 252, 0.8);
             border: 1px solid rgba(15, 23, 42, 0.05);
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
+
+        /* Seamless Infinite Slider */
+        .slider-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+        }
+        .slider-track {
+            display: flex;
+            width: max-content;
+            animation: scroll linear infinite;
+            will-change: transform;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .slide-img {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin: 0 15px;
+            box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.15);
+            border: 4px solid white;
+            flex-shrink: 0;
+        }
+
+        .preview-btn {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            color: #d4af37;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-size: 13px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            margin-top: 60px;
+        }
+        .preview-btn:hover {
+            background: rgba(212, 175, 55, 1);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px -10px rgba(212, 175, 55, 0.5);
+        }
     </style>
 </head>
 <body>
     <main class="relative min-h-screen w-full flex flex-col items-center justify-center p-6 text-center" id="main-container">
         <!-- Background Ambient Glow -->
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(212,175,55,0.05),transparent_70%)] pointer-events-none"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(212,175,55,0.08),transparent_70%)] pointer-events-none"></div>
 
         <!-- Countdown Section -->
-        <section id="countdown-section" class="fade-in z-10">
-            <!-- Mystery Timer: No labels or headings explaining the event -->
-            <div class="flex flex-wrap justify-center gap-4 md:gap-8">
+        <section id="countdown-section" class="fade-in z-10 w-full flex flex-col items-center">
+            <div class="flex flex-wrap justify-center gap-4 md:gap-8 mb-4">
                 <div class="flex flex-col items-center">
                     <div id="days" class="unit-card w-24 h-28 md:w-32 md:h-36 flex items-center justify-center rounded-2xl shadow-sm text-4xl md:text-6xl font-light">00</div>
                     <span class="mt-3 text-[10px] font-bold uppercase tracking-widest text-slate-400">Days</span>
@@ -94,31 +140,37 @@
                     <span class="mt-3 text-[10px] font-bold uppercase tracking-widest text-slate-400">Sec</span>
                 </div>
             </div>
-            
-            <!-- Secret debug trigger: Click bottom-left corner 5 times to force celebration -->
+
+            <button class="preview-btn" onclick="triggerCelebration()">Preview 2026</button>
             <div id="secret-trigger" class="opacity-0 absolute bottom-0 left-0 w-24 h-24 cursor-default" onclick="secretClick()"></div>
         </section>
 
         <!-- Celebration Section -->
-        <section id="celebration-section" class="hidden z-20 fade-in">
-            <h3 class="text-lg md:text-2xl font-light tracking-[0.4em] uppercase text-slate-500 mb-4">Happy New Year</h3>
-            <h2 class="shimmer text-8xl md:text-[12rem] font-serif font-black leading-none mb-8">2026</h2>
-            <p class="text-slate-400 max-w-lg mx-auto font-light leading-relaxed">
-                Welcome to a year of infinite potential. May your days be as bright as this moment. Cheers to many more years with you, monu!
+        <section id="celebration-section" class="hidden z-20 fade-in w-full max-w-6xl mx-auto">
+            <h3 class="text-lg md:text-2xl font-light tracking-[0.5em] uppercase text-slate-400 mb-6">Happy New Year</h3>
+            <h2 class="shimmer text-8xl md:text-[14rem] font-serif font-black leading-none mb-10">2026</h2>
+            <p class="text-slate-500 max-w-xl mx-auto font-light leading-relaxed mb-16 px-6 text-lg">
+                Welcome to a year of infinite potential. May your days be as bright as this moment. <br/>
+                <span class="font-medium text-slate-700">Cheers to many more years with you, monu!</span>
             </p>
+            
+            <div class="slider-container py-4">
+                <div id="slider-track-celebration" class="slider-track" style="animation-duration: 40s;">
+                    <!-- Images injected here -->
+                </div>
+            </div>
         </section>
 
-        <!-- Balloon Container -->
         <div id="balloon-container" class="absolute inset-0 pointer-events-none z-15 overflow-hidden"></div>
     </main>
 
     <script>
         const TARGET_DATE = new Date('2026-01-01T00:00:00').getTime();
+        const IMAGE_ASSET_COUNT = 8; 
         let audioCtx;
         let isCelebrated = false;
         let secretCounter = 0;
 
-        // Initialize Audio Context on first interaction
         function initAudio() {
             if (audioCtx) return;
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -126,6 +178,34 @@
 
         document.addEventListener('mousedown', initAudio, { once: true });
         document.addEventListener('touchstart', initAudio, { once: true });
+
+        function setupImageSlider() {
+            const track = document.getElementById('slider-track-celebration');
+            if (!track) return;
+
+            const imageElements = [];
+            for (let i = 1; i <= IMAGE_ASSET_COUNT; i++) {
+                const img = document.createElement('img');
+                img.src = `assets/${i}.jpg`;
+                img.className = 'slide-img';
+                img.alt = 'Memory';
+                img.onerror = () => {
+                    img.src = `https://picsum.photos/400/400?random=${i}`;
+                };
+                imageElements.push(img);
+            }
+
+            // Standard approach for infinite circular loop: 
+            // Put two identical sets side-by-side. When track moves 50% (exactly one set), 
+            // it resets to 0 instantly, looking perfectly seamless.
+            [...imageElements, ...imageElements].forEach(imgNode => {
+                track.appendChild(imgNode.cloneNode());
+            });
+
+            // Adjust animation duration based on content length for consistent speed
+            const speedFactor = 5; // seconds per image
+            track.style.animationDuration = `${IMAGE_ASSET_COUNT * speedFactor}s`;
+        }
 
         function playPopSound() {
             if (!audioCtx) return;
@@ -198,11 +278,11 @@
             
             playFanfare();
             spawnBalloons();
+            setupImageSlider();
             
-            // Continuous confetti sequence
-            const duration = 15 * 1000;
+            const duration = 25 * 1000;
             const animationEnd = Date.now() + duration;
-            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+            const defaults = { startVelocity: 35, spread: 360, ticks: 60, zIndex: 0 };
 
             function randomInRange(min, max) {
                 return Math.random() * (max - min) + min;
@@ -212,7 +292,7 @@
                 const timeLeft = animationEnd - Date.now();
                 if (timeLeft <= 0) return clearInterval(interval);
 
-                const particleCount = 50 * (timeLeft / duration);
+                const particleCount = 60 * (timeLeft / duration);
                 confetti(Object.assign({}, defaults, { 
                     particleCount, 
                     origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
@@ -231,10 +311,10 @@
             const colors = ['#f8fafc', '#d4af37', '#e2e8f0', '#0f172a', '#cbd5e1'];
             const balloon = document.createElement('div');
             const color = colors[Math.floor(Math.random() * colors.length)];
-            const size = 60 + Math.random() * 60;
+            const size = 70 + Math.random() * 50;
             const left = Math.random() * 100;
-            const duration = 12 + Math.random() * 15;
-            const delay = Math.random() * 8;
+            const duration = 8 + Math.random() * 12;
+            const delay = Math.random() * 5;
 
             balloon.className = 'balloon';
             balloon.style.left = `${left}%`;
@@ -243,10 +323,10 @@
             balloon.style.pointerEvents = 'auto';
             
             balloon.innerHTML = `
-                <svg width="${size}" height="${size * 1.2}" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M50 0C22.3858 0 0 22.3858 0 50C0 85 50 115 50 115C50 115 100 85 100 50C100 22.3858 77.6142 0 50 0Z" fill="${color}" fill-opacity="0.95" />
-                    <circle cx="30" cy="30" r="10" fill="white" fill-opacity="0.2" />
-                    <path d="M48 115H52L50 120L48 115Z" fill="${color}" />
+                <svg width="${size}" height="${size * 1.3}" viewBox="0 0 100 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50 0C22.3858 0 0 22.3858 0 50C0 85 50 120 50 120C50 120 100 85 100 50C100 22.3858 77.6142 0 50 0Z" fill="${color}" fill-opacity="0.92" />
+                    <circle cx="30" cy="30" r="10" fill="white" fill-opacity="0.25" />
+                    <path d="M48 120H52L50 125L48 120Z" fill="${color}" />
                 </svg>
             `;
 
@@ -255,8 +335,8 @@
                 playPopSound();
                 balloon.style.display = 'none';
                 confetti({
-                    particleCount: 20,
-                    spread: 60,
+                    particleCount: 25,
+                    spread: 80,
                     origin: { x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight },
                     colors: [color, '#ffffff']
                 });
@@ -268,15 +348,12 @@
         }
 
         function spawnBalloons() {
-            // Initial batch
-            for(let i = 0; i < 30; i++) {
-                setTimeout(createBalloon, i * 180);
+            for(let i = 0; i < 40; i++) {
+                setTimeout(createBalloon, i * 120);
             }
-            // Continuous spawning
-            setInterval(() => { if (isCelebrated) createBalloon(); }, 1400);
+            setInterval(() => { if (isCelebrated) createBalloon(); }, 1000);
         }
 
-        // Start timer
         setInterval(updateTimer, 1000);
         updateTimer();
     </script>
